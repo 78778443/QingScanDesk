@@ -1,0 +1,44 @@
+{
+  "id": "3126540",
+  "name": "QingScan",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6429564",
+      "name": "主页",
+      "font_class": "zhuye",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "11569568",
+      "name": "扫描",
+      "font_class": "saomiao",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "722465",
+      "name": "系统",
+      "font_class": "xitong",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "25187236",
+      "name": "数据收集",
+      "font_class": "shujushouji",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "25599982",
+      "name": "风控审计",
+      "font_class": "fengkongshenji",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    }
+  ]
+}
