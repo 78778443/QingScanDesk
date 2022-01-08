@@ -12,6 +12,11 @@ QingScan 是一款聚合扫描器，本身不生产安全扫描功能，但会�
 - 哔哩哔哩：https://space.bilibili.com/437273065
 - 官网地址：http://qingscan.songboy.site/
 
+## 界面预览
+
+<img width="1131" alt="df7318509490d5c88b9a3e22a5f3718" src="https://user-images.githubusercontent.com/8509054/148645815-51bce636-c2dd-4240-8122-598310c43234.png">
+
+
 ## 安装部署
 
 ### 安装依赖
