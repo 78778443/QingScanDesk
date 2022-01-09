@@ -1,99 +1,163 @@
 <template>
-  <a-table :columns="columns" :data-source="data">
-    <template #headerCell="{ column }">
-      <template v-if="column.key === 'name'">
-        <span>
-          <smile-outlined />
-          Name
-        </span>
-      </template>
-    </template>
-
-    <template #bodyCell="{ column, record }">
-      <template v-if="column.key === 'name'">
-        <a>
-          {{ record.name }}
+  <!-- <a-form
+    ref="formRef"
+    name="advanced_search"
+    class="ant-advanced-search-form"
+    :model="formState"
+  >
+    <a-row :gutter="24">
+      <a-form-item :label="`field-${i}`">
+        <a-input
+          v-model:value="formState[`field-${i}`]"
+          placeholder="placeholder"
+        ></a-input>
+      </a-form-item>
+    </a-row>
+    <a-row>
+      <a-col :span="24" style="text-align: right">
+        <a-button type="primary" html-type="submit">搜索</a-button>
+        <a-button style="margin: 0 8px" @click="() => formRef.resetFields()"
+          >充值</a-button
+        >
+        <a style="font-size: 12px" @click="expand = !expand">
+          <template v-if="expand">
+            <UpOutlined />
+          </template>
+          <template v-else>
+            <DownOutlined />
+          </template>
+          Collapse
         </a>
+      </a-col>
+    </a-row>
+  </a-form> -->
+  <div class="page-content">
+    <div class="table-header-actions">
+      <a-button type="primary" @click="batchAdd">批量添加目标</a-button>
+      <a-button type="primary" @click="download">下载模板</a-button>
+      <a-button type="primary" @click="add">添加</a-button>
+    </div>
+    <a-table
+      :columns="columns"
+      :data-source="data"
+      :pagination="pagination"
+      :total="100"
+      @change="search"
+      :loading="loading"
+    >
+      <template #bodyCell="{ column }">
+        <template v-if="column.key === 'action'">
+          <span>
+            <a>启动代理</a>
+            <a-divider type="vertical" />
+            <a>查看详情</a>
+            <a-divider type="vertical" />
+            <a>重新扫描</a>
+            <a-divider type="vertical" />
+            <a>删除</a>
+          </span>
+        </template>
       </template>
-      <template v-else-if="column.key === 'action'">
-        <span>
-          <a>Invite 一 {{ record.name }}</a>
-          <a-divider type="vertical" />
-          <a>Delete</a>
-          <a-divider type="vertical" />
-          <a class="ant-dropdown-link">
-            More actions
-            <down-outlined />
-          </a>
-        </span>
-      </template>
-    </template>
-  </a-table>
+    </a-table>
+    <BlackBoxFormDialog v-model:visible="visible" @update="search" />
+  </div>
 </template>
 <script>
-import { SmileOutlined, DownOutlined } from '@ant-design/icons-vue';
-import { defineComponent } from 'vue';
+import { onMounted, ref, reactive, computed } from 'vue';
+import BlackBoxFormDialog from './black-box-form-dialog/index.vue';
+import { userBlackBoxSearch } from './userBlackBoxSearch';
+
 const columns = [
   {
-    name: 'Name',
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
+    title: '名称',
     dataIndex: 'name',
     key: 'name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: '是否存在waf',
+    dataIndex: 'is_waf',
+    key: 'is_waf',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: '创建时间',
+    dataIndex: 'create_time',
+    key: 'create_time',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
+    title: '是否内网',
+    dataIndex: 'is_intranet',
+    key: 'is_intranet',
   },
   {
-    title: 'Action',
+    title: '操作',
     key: 'action',
   },
 ];
-
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
-
-export default defineComponent({
+export default {
   components: {
-    SmileOutlined,
-    DownOutlined,
+    BlackBoxFormDialog,
   },
   setup() {
+    const data = ref([]);
+    const searchForm = reactive({});
+    const visible = ref(false);
+    const { page, size, total, loading, requestData } = userBlackBoxSearch();
+
+    const pagination = computed(() => ({
+      total: total.value || 200,
+      current: page.value,
+      pageSize: size.value,
+    }));
+
+    const search = async (pag) => {
+      if (pag) {
+        page.value = pag.current;
+        size.value = pag.pageSize;
+      }
+      const res = await requestData();
+      data.value = res.list;
+    };
+
+    const reset = async (isReset) => {
+      if (isReset === true) {
+        page.value = 1;
+      }
+      search({ page: page.value, size: size.value });
+    };
+
+    const batchAdd = () => {};
+
+    const download = () => {};
+
+    const add = () => {
+      visible.value = true;
+    };
+
+    onMounted(() => {
+      search();
+    });
+
     return {
       data,
+      page,
+      size,
+      total,
+      loading,
+      visible,
       columns,
+      pagination,
+      searchForm,
+      add,
+      reset,
+      search,
+      batchAdd,
+      download,
     };
   },
-});
+};
 </script>

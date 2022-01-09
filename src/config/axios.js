@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { message } from 'ant-design-vue';
 
 // const host = `http://txy8g.songboy.site:18008`;
 
@@ -9,6 +10,7 @@ axios.interceptors.request.use(
     //   config.url = host + `/${config.url || ''}`.replace(/\/\//g, '/');
     // }
     // Do something before request is sent
+    config.headers.token = '1ca4725c34758183af3fd1f723f07a31';
     return config;
   },
   function (error) {
@@ -25,6 +27,7 @@ axios.interceptors.response.use(
     return response.data;
   },
   function (error) {
+    message.warning(error.message);
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
