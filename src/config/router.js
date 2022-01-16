@@ -5,6 +5,7 @@ import BlackBox from '@/view/black-box/index.vue';
 import BatchVerification from '@/view/batch-verification/index.vue';
 import CollectInformation from '@/view/collect-information/index.vue';
 import WhiteBoxAudit from '@/view/white-box-audit/index.vue';
+import BlackBoxDetail from '@/view/black-box-detail/index.vue';
 
 const routes = [
   {
@@ -19,6 +20,10 @@ const routes = [
       {
         path: '/blackBox',
         component: BlackBox,
+      },
+      {
+        path: '/blackBoxDetail',
+        component: BlackBoxDetail,
       },
       {
         path: '/whiteBoxAudit',

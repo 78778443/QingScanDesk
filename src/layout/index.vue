@@ -36,11 +36,7 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff"> </a-layout-header>
-      <a-layout-content
-        :style="{
-          margin: '16px',
-        }"
-      >
+      <a-layout-content class="content">
         <router-view></router-view>
       </a-layout-content>
     </a-layout>
@@ -71,6 +67,10 @@ export default defineComponent({
 <style lang="less">
 .layout {
   height: 100%;
+  .content {
+    padding: 16px;
+    overflow-y: auto;
+  }
 }
 .logo {
   background: #fff;

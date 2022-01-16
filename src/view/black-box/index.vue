@@ -1,36 +1,4 @@
 <template>
-  <!-- <a-form
-    ref="formRef"
-    name="advanced_search"
-    class="ant-advanced-search-form"
-    :model="formState"
-  >
-    <a-row :gutter="24">
-      <a-form-item :label="`field-${i}`">
-        <a-input
-          v-model:value="formState[`field-${i}`]"
-          placeholder="placeholder"
-        ></a-input>
-      </a-form-item>
-    </a-row>
-    <a-row>
-      <a-col :span="24" style="text-align: right">
-        <a-button type="primary" html-type="submit">搜索</a-button>
-        <a-button style="margin: 0 8px" @click="() => formRef.resetFields()"
-          >充值</a-button
-        >
-        <a style="font-size: 12px" @click="expand = !expand">
-          <template v-if="expand">
-            <UpOutlined />
-          </template>
-          <template v-else>
-            <DownOutlined />
-          </template>
-          Collapse
-        </a>
-      </a-col>
-    </a-row>
-  </a-form> -->
   <div class="page-content">
     <div class="table-header-actions">
       <a-button type="primary" @click="batchAdd">批量添加目标</a-button>
@@ -50,7 +18,7 @@
           <span>
             <a>启动代理</a>
             <a-divider type="vertical" />
-            <a>查看详情</a>
+            <a @click="actions('detail')">查看详情</a>
             <a-divider type="vertical" />
             <a>重新扫描</a>
             <a-divider type="vertical" />
@@ -63,7 +31,7 @@
   </div>
 </template>
 <script>
-import { onMounted, ref, reactive, computed } from 'vue';
+import { onMounted, ref, reactive, computed, getCurrentInstance } from 'vue';
 import BlackBoxFormDialog from './black-box-form-dialog/index.vue';
 import { userBlackBoxSearch } from './userBlackBoxSearch';
 
@@ -103,6 +71,7 @@ export default {
     BlackBoxFormDialog,
   },
   setup() {
+    const _this = getCurrentInstance().proxy;
     const data = ref([]);
     const searchForm = reactive({});
     const visible = ref(false);
@@ -128,6 +97,17 @@ export default {
         page.value = 1;
       }
       search({ page: page.value, size: size.value });
+    };
+
+    const actions = (type) => {
+      switch (type) {
+        case 'detail':
+          _this.$router.push('blackBoxDetail');
+          break;
+
+        default:
+          break;
+      }
     };
 
     const batchAdd = () => {};
@@ -157,6 +137,7 @@ export default {
       search,
       batchAdd,
       download,
+      actions,
     };
   },
 };
