@@ -13,12 +13,12 @@
       @change="search"
       :loading="loading"
     >
-      <template #bodyCell="{ column }">
+      <template #bodyCell="{ column, text }">
         <template v-if="column.key === 'action'">
           <span>
             <a>启动代理</a>
             <a-divider type="vertical" />
-            <a @click="actions('detail')">查看详情</a>
+            <a @click="actions('detail', text)">查看详情</a>
             <a-divider type="vertical" />
             <a>重新扫描</a>
             <a-divider type="vertical" />
@@ -99,10 +99,12 @@ export default {
       search({ page: page.value, size: size.value });
     };
 
-    const actions = (type) => {
+    const actions = (type, row) => {
       switch (type) {
         case 'detail':
-          _this.$router.push('blackBoxDetail');
+          _this.$router.push({
+            path: `/blackBoxDetail/${row.id}`,
+          });
           break;
 
         default:

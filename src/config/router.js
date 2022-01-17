@@ -22,7 +22,7 @@ const routes = [
         component: BlackBox,
       },
       {
-        path: '/blackBoxDetail',
+        path: '/blackBoxDetail/:id',
         component: BlackBoxDetail,
       },
       {
@@ -42,6 +42,8 @@ const routes = [
 ];
 
 export const router = VueRouter.createRouter({
-  history: VueRouter.createWebHistory(),
+  history: process.env.WEBPACK_DEV_SERVER_URL
+    ? VueRouter.createWebHistory()
+    : VueRouter.createWebHashHistory(),
   routes, // (缩写) 相当于 routes: routes
 });
