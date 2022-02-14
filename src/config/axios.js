@@ -1,35 +1,34 @@
 import axios from 'axios';
 import { message } from 'ant-design-vue';
 
-// const host = `http://txy8g.songboy.site:18008`;
+const host = localStorage.getItem('host');
+const token = localStorage.getItem('token');
+// const isProduction = process.env.NODE_ENV === 'production';
 
-// Add a request interceptor
 axios.interceptors.request.use(
   function (config) {
-    // if (!/http/.test(config.url)) {
-    //   config.url = host + `/${config.url || ''}`.replace(/\/\//g, '/');
-    // }
-    // Do something before request is sent
-    config.headers.token = '1ca4725c34758183af3fd1f723f07a31';
+    if (!/http/.test(config.url)) {
+      // 优化双斜杠问题
+      config.url = (host + `${config.url || ''}`)
+        .replace(/\/\//g, '/')
+        .replace('http:/', 'http://')
+        .replace('https:/', 'https://');
+    }
+    config.headers.token = token;
+
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
 
-// Add a response interceptor
 axios.interceptors.response.use(
   function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     return response.data;
   },
   function (error) {
     message.warning(error.message);
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return Promise.reject(error);
   }
 );

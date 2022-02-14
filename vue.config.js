@@ -11,7 +11,7 @@ const webpackConfig = {
 
 module.exports = {
   devServer: {
-    proxy: 'http://txy8g.songboy.site:8010/',
+    // proxy: 'http://txy8g.songboy.site:8010/',
   },
   css: {
     loaderOptions: {

@@ -6,6 +6,7 @@ import BatchVerification from '@/view/batch-verification/index.vue';
 import CollectInformation from '@/view/collect-information/index.vue';
 import WhiteBoxAudit from '@/view/white-box-audit/index.vue';
 import BlackBoxDetail from '@/view/black-box-detail/index.vue';
+import Setting from '@/view/setting/index.vue';
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
       {
         path: '/batchVerification',
         component: BatchVerification,
+      },
+      {
+        path: '/setting',
+        component: Setting,
       },
     ],
   },

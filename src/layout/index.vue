@@ -32,6 +32,10 @@
           <verified-outlined />
           <span>批量验证</span>
         </a-menu-item>
+        <a-menu-item key="setting">
+          <setting-outlined />
+          <span>设置</span>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -43,12 +47,13 @@
   </a-layout>
 </template>
 <script>
-import { VerifiedOutlined } from '@ant-design/icons-vue';
+import { VerifiedOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref, getCurrentInstance } from 'vue';
 import Icon from '@/components/icon/index.vue';
 export default defineComponent({
   components: {
     Icon,
+    SettingOutlined,
     VerifiedOutlined,
   },
   setup() {

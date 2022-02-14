@@ -17,10 +17,10 @@
               v-for="(subItem, subIndex) in item.subInfo"
               :key="subIndex"
             >
-              <span class="sub-item-name">{{ subItem.name }}：</span>
-              <span>
+              <span class="sub-item-name">{{ subItem.name }}</span>
+              <p>
                 <a-tag color="blue">{{ subItem.value }}</a-tag>
-              </span>
+              </p>
             </div>
           </div>
         </a-card>
@@ -61,7 +61,7 @@ export default {
 .sub-item {
   width: 33%;
   margin-bottom: 4px;
-  display: flex;
+  // display: flex;
   .sub-item-name {
     min-width: 100px;
     text-align: right;
